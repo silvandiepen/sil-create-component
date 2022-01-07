@@ -29,7 +29,20 @@ function question {
 
 # // Reset
 declare COMPONENT_NAME=$1
+
+
+if [ -z $COMPONENT_NAME ]; then
+    question "What is your Components Name?" "PascalCase"
+    read -p " " COMPONENT_NAME
+ fi
+
+if [ -z $COMPONENT_NAME ]; then
+    echo "Without a component name, I can't do anything for you."
+    exit 0
+fi
+
 declare FILE_NAME=$COMPONENT_NAME
+
 
 while [[ "$FILE_NAME" =~ (.*[a-z0-9])([A-Z].*) ]] && FILE_NAME="${BASH_REMATCH[1]}-${BASH_REMATCH[2]}"; do
   :  # do nothing
@@ -60,14 +73,23 @@ fi
 
 function createFile {
 
+HOST="https://create-component.sil.mt"
 TEMPLATE_FILE="assets/files/$1.${2}"
+HOSTED_FILE="${HOST}/${TEMPLATE_FILE}"
+
 DESTINATION_FILE="${DEST}/$COMPONENT_NAME/${COMPONENT_NAME}.${2}"
 
-cp $TEMPLATE_FILE $DESTINATION_FILE
+
+if [ ! -d $TEMPLATE_FILE ]; then
+    curl --silent $HOSTED_FILE -o $DESTINATION_FILE
+else
+    cp $TEMPLATE_FILE $DESTINATION_FILE
+fi
+
 
 perl -pi -e "s/COMPONENT_NAME/${COMPONENT_NAME}/g" $DESTINATION_FILE
 perl -pi -e "s/FILE_NAME/$(toLowerCase $FILE_NAME)/g" $DESTINATION_FILE
-echo "\t${green}${bold}✓${reset} created file ${bold}$DESTINATION_FILE${reset}"
+echo "\t${green}${bold}✓${reset} created file ${bold}$DEST/$COMPONENT_NAME/$COMPONENT_NAME.${2}${reset}"
 
 }
 
