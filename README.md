@@ -11,3 +11,7 @@ function sil:component {
     bash < <(curl -s https://create-component.sil.mt/assets/commit.sh)
 }
 ```
+
+### Similar projects
+
+- (Sil Commit)[https://commit.sil.mt]
