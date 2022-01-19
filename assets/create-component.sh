@@ -97,4 +97,4 @@ createFile component vue
 createFile script ts
 createFile style scss
 createFile template html
-
+createFile index ts

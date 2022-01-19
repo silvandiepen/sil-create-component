@@ -1,7 +1,11 @@
 import { defineComponent } from "vue";
+import { Style } from "@sil/tools";
 
 export default defineComponent({
   setup() {
-    return {};
+    const style = new Style("FILE_NAME");
+    return {
+      bem: style.bem,
+    };
   },
 });
