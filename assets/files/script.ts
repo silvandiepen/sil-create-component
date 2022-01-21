@@ -5,7 +5,7 @@ export default defineComponent({
   setup() {
     const style = new Style("FILE_NAME");
     return {
-      bem: style.bem,
+      style,
     };
   },
 });
