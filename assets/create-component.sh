@@ -70,26 +70,34 @@ if [ ! -d $DEST/$COMPONENT_NAME ]; then
     mkdir -p "$DEST/$COMPONENT_NAME"
 fi
 
+ALT_FILE_NAME=""
 
 function createFile {
 
-HOST="https://create-component.sil.mt"
-TEMPLATE_FILE="assets/files/$1.${2}"
-HOSTED_FILE="${HOST}/${TEMPLATE_FILE}"
+    HOST="https://create-component.sil.mt"
+    TEMPLATE_FILE="assets/files/$1.${2}"
+    HOSTED_FILE="${HOST}/${TEMPLATE_FILE}"
 
-DESTINATION_FILE="${DEST}/$COMPONENT_NAME/${COMPONENT_NAME}.${2}"
+    DESTINATION_FILE=""
+
+    if [ $ALT_FILE_NAME ]; then        
+        DESTINATION_FILE="${DEST}/$COMPONENT_NAME/${ALT_FILE_NAME}.${2}"
+    else        
+        DESTINATION_FILE="${DEST}/$COMPONENT_NAME/${COMPONENT_NAME}.${2}"
+    fi 
 
 
-if [ ! -d $TEMPLATE_FILE ]; then
-    curl --silent $HOSTED_FILE -o $DESTINATION_FILE
-else
-    cp $TEMPLATE_FILE $DESTINATION_FILE
-fi
+
+    if [ ! -d $TEMPLATE_FILE ]; then
+        curl --silent $HOSTED_FILE -o $DESTINATION_FILE
+    else
+        cp $TEMPLATE_FILE $DESTINATION_FILE
+    fi
 
 
-perl -pi -e "s/COMPONENT_NAME/${COMPONENT_NAME}/g" $DESTINATION_FILE
-perl -pi -e "s/FILE_NAME/$(toLowerCase $FILE_NAME)/g" $DESTINATION_FILE
-echo "\t${green}${bold}✓${reset} created file ${bold}$DEST/$COMPONENT_NAME/$COMPONENT_NAME.${2}${reset}"
+    perl -pi -e "s/COMPONENT_NAME/${COMPONENT_NAME}/g" $DESTINATION_FILE
+    perl -pi -e "s/FILE_NAME/$(toLowerCase $FILE_NAME)/g" $DESTINATION_FILE
+    printf "\t${green}${bold}✓${reset} created file ${bold}${DESTINATION_FILE}${reset}\n"
 
 }
 
@@ -97,4 +105,8 @@ createFile component vue
 createFile script ts
 createFile style scss
 createFile template html
-createFile index ts
+
+ALT_FILE_NAME="index"
+
+createFile index ts    
+printf "\n"
