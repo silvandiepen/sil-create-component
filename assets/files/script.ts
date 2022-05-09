@@ -1,11 +1,11 @@
 import { defineComponent } from "vue";
-import { Style } from "@sil/tools";
+import { createBemm } from "bemm";
 
 export default defineComponent({
   setup() {
-    const style = new Style("FILE_NAME");
+    const bemm = createBemm("FILE_NAME");
     return {
-      style,
+      bemm,
     };
   },
 });
