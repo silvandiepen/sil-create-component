@@ -20,7 +20,6 @@ function question {
         else 
             printf "\t${bold}${1}${reset} ${blue}($2)${reset} \n"
         fi
-        
     else 
         printf "\t${bold}${1}${reset} \n"
     fi 
@@ -86,7 +85,8 @@ function createFile {
         if [ "${1}" == "component" ];
             DESTINATION_FILE="${DEST}/$COMPONENT_NAME/${COMPONENT_NAME}.${2}"
         else
-            DESTINATION_FILE="${DEST}/$COMPONENT_NAME/${COMPONENT_NAME}.${1}.${2}"     
+            DESTINATION_FILE="${DEST}/$COMPONENT_NAME/${COMPONENT_NAME}.${1}.${2}"  
+        fi    
     fi 
 
 
