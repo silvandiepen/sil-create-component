@@ -83,7 +83,10 @@ function createFile {
     if [ $ALT_FILE_NAME ]; then        
         DESTINATION_FILE="${DEST}/$COMPONENT_NAME/${ALT_FILE_NAME}.${2}"
     else        
-        DESTINATION_FILE="${DEST}/$COMPONENT_NAME/${COMPONENT_NAME}.${1}.${2}"
+        if [ "${1}" == "component" ];
+            DESTINATION_FILE="${DEST}/$COMPONENT_NAME/${COMPONENT_NAME}.${2}"
+        else
+            DESTINATION_FILE="${DEST}/$COMPONENT_NAME/${COMPONENT_NAME}.${1}.${2}"     
     fi 
 
 
